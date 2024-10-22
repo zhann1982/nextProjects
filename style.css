@@ -1,0 +1,44 @@
+.static {
+    position: static;
+
+    width: calc(100% - 60px);
+    height: 100px;
+    background-color: #c5fff7;
+    border-radius: 15px;
+}
+
+.static1 {
+    position: static;
+
+    width: calc(100% - 60px);
+    height: 200px;
+    background-color: #cee3ff;
+    border-radius: 15px;
+}
+
+.relative {
+    position: relative;
+    top: -60px;
+    left: 50px;
+
+    padding: 5px;
+    width: calc(100% - 60px);
+    background-color: #ffe2ce;
+    border-radius: 15px;
+}
+
+.static p,
+.static1 p {
+    text-align: center;
+    line-height: 100px;
+    font-weight: 700;
+    font-size: 30px;
+    opacity: 50%;
+}
+
+.relative p {
+    text-align: center;
+    font-weight: 700;
+    font-size: 30px;
+    opacity: 50%;
+}
