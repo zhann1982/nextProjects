@@ -1,5 +1,7 @@
+/* Создаем классы для статичных блоков */
 .static {
-    position: static;
+    position: static;  
+    /* Это значение по умолчанию. Его можно не прописывать*/
 
     width: calc(100% - 60px);
     height: 100px;
@@ -16,10 +18,16 @@
     border-radius: 15px;
 }
 
+/* Создаем класс для того чтобы можно было смещать блоки */
 .relative {
     position: relative;
     top: -60px;
     left: 50px;
+
+    /* Важно понимать что смещается само отображение блока. 
+    А его физические границы остаются там где блок имел свойство static
+    Поэтому визуально блок перекрывает другие блоки и не смещает их вслед
+    за собой */
 
     padding: 5px;
     width: calc(100% - 60px);
@@ -27,13 +35,16 @@
     border-radius: 15px;
 }
 
-.static p,
-.static1 p {
+/* Задаем стили для абзацев чтобы сделать их более читабельными */
+p {
     text-align: center;
-    line-height: 100px;
     font-weight: 700;
     font-size: 30px;
     opacity: 50%;
+}
+.static p,
+.static1 p {
+    line-height: 100px;
 }
 
 .relative p {
@@ -42,3 +53,108 @@
     font-size: 30px;
     opacity: 50%;
 }
+
+/* В этом классе я использовал вложенность для практики */
+.parent1 {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #999999; 
+
+    position: relative;
+
+    .child {
+        min-height: 100px;
+        background-color: lightcyan;
+        border-radius: 15px;
+        min-width: 300px;
+    }
+
+
+    /* Если оставить у родительского блока позицию static, тогда 
+    блок с классом .absolute будет расположен относительно body
+    нисмотря на то что он вложен в другой блок. Он переместиться вверх страницы */
+    /* Если задату у родительского блока позицию absolute или relative, 
+    тогда блок с классом .absolute будет расположен относительно родительского
+    блока*/
+    /* В обоих случаях можно наблюдать как соседние блоки больше не видят блок 
+    с позицией absolute. Его место занимает блок который идет вслед за ним */
+
+    .absolute {
+        outline: 1px solid red;
+
+        position: absolute;
+        top: 60px;
+        right: 80px;
+
+        width: 100%;
+        /* Если не задать заранее ширину, то можно увидеть как схлопывается 
+        ширина блока с позицией absolute. Поэтому в такой ситуации нужно прописывать
+        ширину явно.*/
+        z-index: 1;
+    } 
+
+}
+
+.fixed {
+    position: fixed;
+    bottom: 60px;
+    right: 60px;
+
+    min-height: 100px;
+    background-color: rgb(138, 219, 45);
+    border-radius: 15px;
+    min-width: 300px;
+
+    z-index: 2;
+    /*Нам нужно изменить z-index на 2 у этого блока, так как 
+    ранее мы задали z-index: 1 для одного из элементов.
+    Это нужно для того чтобы наш зафиксированный блок всегда стоял поверх
+    других. Иначе его может перекрыть другой блок*/
+}
+
+.parent2 {
+
+    /* Нам придется прописать для этого блока position: absolute;
+    так как без этого свойства данный блок пытается занять место предыдущего 
+    блока со свойстовм position: absolute;*/
+
+    position: absolute;
+
+    /*Задаем position: sticky для трех вложенных заголовка
+    При прокрутке они должны остановиться на разных значениях top, чтобы не 
+    перекрывать друг друга*/
+
+    h3:nth-child(1) {
+        position: sticky;
+        top: 120px;
+    }
+    
+    h3:nth-child(3) {
+        position: sticky;
+        top: 160px;
+    }
+    
+    h3:nth-child(5) {
+        position: sticky;
+        top: 200px;
+    }
+
+    /* немного стилизуем наши заголовки и абзацы */
+    h3 {
+        text-align: center;
+        color: #d31313;
+        font-size: 2em;
+        background-color: rgba(255,255,255,0.6);
+    }
+    
+    p {
+        text-align: left;
+        color: #161616;
+        font-size: 1rem;
+        font-weight: normal;
+        opacity: 1;
+    }
+    
+}
+
+
